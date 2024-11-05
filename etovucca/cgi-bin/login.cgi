@@ -13,7 +13,7 @@ def render_login(failure=False, logout=False):
         print("Set-Cookie: user=LOGGEDOUT; expires=Thu, 01 Jan 1970 00:00:00 GMT")
     print()
     print('<link rel="stylesheet" href="https://spar.isi.jhu.edu/teaching/443/main.css">')
-    print('<h2 id="dlobeid-etovucca-voting-machine">DLOBEID EtovUcca Voting Machine</h2>')
+    print('<h2 id="dlobeid-etovucca-voting-machine">POI Voting Machine</h2>')
     print('<h1 id="admin-interface-login">Admin Interface Login</h1><br>')
     if failure:
         print('<b>Login Failed.</b>')
