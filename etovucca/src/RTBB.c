@@ -135,6 +135,7 @@ int main(int argc, char **argv) {
       int zip;
       Date dob;
       strncpy(name, argv[2], MAX_NAME_LEN-1);
+      name[MAX_NAME_LEN - 1] = '\0';
       strcpy(county, argv[3]);
       if (sscanf(argv[4], "%d", &zip) != 1) {
          printf("%s", USAGE);
