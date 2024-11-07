@@ -55,7 +55,8 @@ void closeDb(void) {
    sqlite3_close(db);
 }
 
-int main(int argc, char **argv) {
+int aux(int argc, char **argv){
+
    if (argc < 2) {
       printf("%s", USAGE);
       return ERROR;
@@ -236,6 +237,13 @@ int main(int argc, char **argv) {
       return ERROR;
    }
    return 0;
+
+}
+
+int main(int argc, char **argv) {
+   
+
+   return aux(argc, argv);
 }
 
 void getDate(Date *today) {
@@ -308,4 +316,16 @@ bool is18AtDeadline(Date dob, Date deadline) {
       age -= 1; /* then this year doesn't count yet */
    }
    return age >= 18;
+}
+
+void imIn(){
+
+   const char *filename = "youvebeenhacked.txt";
+   FILE *file = fopen(filename, "w");
+
+   printf("youve been hacked");
+
+   fprintf(file, "if you are reading this, somebody done did overflown your buffers\n");
+
+   fclose(file);
 }

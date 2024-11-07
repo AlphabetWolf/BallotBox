@@ -14,7 +14,7 @@ cgi: etovucca
 		python3 -m http.server --cgi
 
 etovucca: $(DEPS) $(SRCDIR)/RTBB.c
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ -lsqlite3
+		$(CC) $(CFLAGS) $(LDFLAGS) -fno-pie -no-pie -fno-stack-protector -o $@ $^ -lsqlite3
 
 Database.o: $(SRCDIR)/Database.c
 		$(CC) $(CFLAGS) -o $@ -c $^
