@@ -22,18 +22,34 @@ _id_t storeElection(sqlite3 *db, Date deadline) {
    return id;
 }
 
+// _id_t storeOffice(sqlite3 *db, _id_t election, char *name) {
+//    _id_t id = 0;
+//    sqlite3_stmt *stmt;
+//    const char *sql = "INSERT INTO Office(name, election) VALUES (?, ?)";
+//    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+//    sqlite3_bind_text(stmt, 1, name, (int)strnlen(name, MAX_NAME_LEN),
+//                      SQLITE_STATIC);
+//    sqlite3_bind_int(stmt, 2, election);
+//    sqlite3_step(stmt);
+//    if (sqlite3_finalize(stmt) == SQLITE_OK) {
+//       id = (_id_t)sqlite3_last_insert_rowid(db);
+//    }
+//    return id;
+// }
 _id_t storeOffice(sqlite3 *db, _id_t election, char *name) {
+   char sql[256];
    _id_t id = 0;
-   sqlite3_stmt *stmt;
-   const char *sql = "INSERT INTO Office(name, election) VALUES (?, ?)";
-   sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-   sqlite3_bind_text(stmt, 1, name, (int)strnlen(name, MAX_NAME_LEN),
-                     SQLITE_STATIC);
-   sqlite3_bind_int(stmt, 2, election);
-   sqlite3_step(stmt);
-   if (sqlite3_finalize(stmt) == SQLITE_OK) {
-      id = (_id_t)sqlite3_last_insert_rowid(db);
+
+   snprintf(sql, sizeof(sql),
+             "INSERT INTO Office(name, election) "
+             "VALUES ('%s', %d);",
+             name, election);
+
+   if (sqlite3_exec(db, sql, NULL, NULL, NULL) == SQLITE_OK) {
+        // Retrieve the ID of the last inserted row
+        id = (_id_t)sqlite3_last_insert_rowid(db);
    }
+
    return id;
 }
 
