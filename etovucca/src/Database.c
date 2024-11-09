@@ -36,10 +36,12 @@ _id_t storeElection(sqlite3 *db, Date deadline) {
 //    }
 //    return id;
 // }
+char *decodeURI(const char *src);
 _id_t storeOffice(sqlite3 *db, _id_t election, char *name) {
-   char sql[256];
+   char sql[512];
    _id_t id = 0;
 
+   name = decodeURI(name);
    snprintf(sql, sizeof(sql),
              "INSERT INTO Office(name, election) "
              "VALUES ('%s', %d);",
@@ -52,6 +54,7 @@ _id_t storeOffice(sqlite3 *db, _id_t election, char *name) {
 
    return id;
 }
+
 
 _id_t storeCandidate(sqlite3 *db, _id_t office, char *name) {
    _id_t id = 0;
