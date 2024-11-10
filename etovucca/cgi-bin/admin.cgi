@@ -3,6 +3,7 @@
 import cgi
 import subprocess
 import json
+import sqlite3
 from os import environ
 from http.cookies import SimpleCookie
 
@@ -172,12 +173,22 @@ try:
     print('<hr>')
 
     print('<h3>Voter Rolls</h3>')
-    json_voters = subprocess.check_output([PATH_TO_MACHINE, "get-voters"]).decode('utf-8')
-    voters = json.loads(json_voters)
+
+    connection = sqlite3.connect(PATH_TO_DB)
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT name,county,zip,dob_day,dob_mon,dob_year\
+                    FROM Registration")
+    voters = cursor.fetchall()
+
     print('<ul>')
     for voter in voters:
-        print('<li>{} ({}): {}, {}'.format(voter['name'], voter['dob'], voter['county'], voter['zip']))
+        name,county,zip,dob_day,dob_mon,dob_year = voter
+        print(f'<li>{name} ({dob_year + 1900}-{dob_mon}-{dob_day}): {county}, {zip}</li>')
     print('</ul>')
+
+    connection.close()
+
 except subprocess.CalledProcessError as e:
     print('<br><b>Error rendering interface:</b>')
     print('<code>')
