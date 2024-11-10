@@ -25,8 +25,8 @@ CREATE TABLE Election (
 );
 
 INSERT INTO Election (id, deadline_day, deadline_mon, deadline_year, status) 
-VALUES (1, 4, 7, 2022-1900, 1), 
-       (2, 31, 10, 2024-1900, 1);
+VALUES (1, 4, 7, 2026-1900, 1), 
+       (2, 31, 10, 2028-1900, 1);
 
 
 DROP TABLE IF EXISTS Office;

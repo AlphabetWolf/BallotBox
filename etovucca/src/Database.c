@@ -84,17 +84,17 @@ void addZip(sqlite3 *db, _id_t office, int zip) {
 }
 
 bool checkZip(sqlite3 *db, _id_t office, int zip) {
-   int count;
+
+   int result;
    sqlite3_stmt *stmt;
-   const char *sql = "SELECT COUNT(*) FROM AllowedZip WHERE\
-                      zip=? AND office=?";
+   const char *sql = "SELECT NOT EXISTS (SELECT 1 FROM AllowedZip WHERE zip=? AND office=?)";
    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
    sqlite3_bind_int(stmt, 1, zip);
    sqlite3_bind_int(stmt, 2, office);
    sqlite3_step(stmt);
-   count = sqlite3_column_int(stmt, 0);
+   result = sqlite3_column_int(stmt, 0);
    sqlite3_finalize(stmt);
-   return count > 0;
+   return result == 1;
 }
 
 char *decodeURI(const char *src) {
