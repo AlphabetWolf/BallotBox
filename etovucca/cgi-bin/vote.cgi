@@ -10,7 +10,7 @@ PATH_TO_DB = "rtbb.sqlite3"
 ID_SQL = 'SELECT id FROM Election WHERE deadline_day={} AND deadline_mon={} AND deadline_year={}'
 
 def convert_date_to_id(date):
-    # Please don't ever actually do this.
+
     date_positions = date.split("-")
     sql = ID_SQL.format(date_positions[2], date_positions[1], int(date_positions[0]) - 1900) # U+1F914
     election_id = int(subprocess.check_output([PATH_TO_SQLITE, PATH_TO_DB, sql]))

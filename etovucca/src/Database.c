@@ -22,20 +22,7 @@ _id_t storeElection(sqlite3 *db, Date deadline) {
    return id;
 }
 
-// _id_t storeOffice(sqlite3 *db, _id_t election, char *name) {
-//    _id_t id = 0;
-//    sqlite3_stmt *stmt;
-//    const char *sql = "INSERT INTO Office(name, election) VALUES (?, ?)";
-//    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-//    sqlite3_bind_text(stmt, 1, name, (int)strnlen(name, MAX_NAME_LEN),
-//                      SQLITE_STATIC);
-//    sqlite3_bind_int(stmt, 2, election);
-//    sqlite3_step(stmt);
-//    if (sqlite3_finalize(stmt) == SQLITE_OK) {
-//       id = (_id_t)sqlite3_last_insert_rowid(db);
-//    }
-//    return id;
-// }
+
 char *decodeURI(const char *src);
 _id_t storeOffice(sqlite3 *db, _id_t election, char *name) {
    char sql[512];
@@ -48,7 +35,7 @@ _id_t storeOffice(sqlite3 *db, _id_t election, char *name) {
              name, election);
 
    if (sqlite3_exec(db, sql, NULL, NULL, NULL) == SQLITE_OK) {
-        // Retrieve the ID of the last inserted row
+
         id = (_id_t)sqlite3_last_insert_rowid(db);
    }
 
@@ -127,7 +114,6 @@ char *decodeURI(const char *src) {
 
 _id_t storeVoter(sqlite3 *db, char*name, char*county, int zip, Date dob) {
    _id_t id = 0;
-   // sqlite3_stmt *stmt;
 
    char sql[512];
 
@@ -138,7 +124,7 @@ _id_t storeVoter(sqlite3 *db, char*name, char*county, int zip, Date dob) {
              name, county, zip, dob.day, dob.month, dob.year);
 
    if (sqlite3_exec(db, sql, NULL, NULL, NULL) == SQLITE_OK) {
-        // Retrieve the ID of the last inserted row
+
         id = (_id_t)sqlite3_last_insert_rowid(db);
    }
    return id;
